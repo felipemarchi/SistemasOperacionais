@@ -1,4 +1,4 @@
-# Informações sobre os projetos para Sistemas Operacionais
+﻿# Informações sobre os projetos para Sistemas Operacionais
 Este é o repositório padrão para a disciplina Sistemas Operacionais, oferecida na [Faculdade de Tecnologia](http://www.ft.unicamp.br) da [UNICAMP](http://www.unicamp.br). Nesse repositório estão as informações gerias sobre os projetos a serem desenvolvidos na disciplina e alguns códigos fonte básicos que os estudantes devem usar nos seus projetos.
 
 ## Informações gerais sobre os projetos
@@ -40,3 +40,5 @@ A falta de qualquer um dos itens acarretará em nota zero nesse componente de av
 A breve descrição dos projetos está a seguir. Clique nos projetos para ir direto às respectivas descrições:
 * [Projeto 1](Projeto1.md): Localiza na matriz.
 * [Projeto 2](Projeto2.md): Ordenação de Alto Desempenho
+
+## Teste de alteração
