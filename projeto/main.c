@@ -17,7 +17,7 @@ int main(){
     //vars
     char linhas[6];
     char colunas[6];
-    int threads[3];
+    int threads;
     char valor[20];
     char arquivo[30];
 
@@ -78,6 +78,19 @@ int main(){
             colunas[i] = ' ';// transformação do '\n' para ' '
     }while(!valid);//Caso seja inválido o processo deve-se repetir
 
+    printf("\nNome do arquivo da matriz: ");//Entrada do nome do arquivo a ser gerado
+    scanf("%s",&arquivo);
+
+    strcat(comando,"../plugins/generateRandomMatrixDouble ");
+    strcat(comando,linhas);
+    strcat(comando,colunas);
+    strcat(comando,arquivo);
+    strcat(comando,".txt");
+
+    system(comando);
+
+    printf("\nMatriz gerada!\n");
+
     printf("\nT: ");//Entrada das threads
     scanf("%d",&threads);
 
@@ -85,23 +98,8 @@ int main(){
     printf("\nV: ");//Entrada do valor a ser buscado na matriz
     scanf("%s",&valor);
 
-    getchar();
-    printf("\nNome do arquivo da matriz: ");//Entrada do nome do arquivo a ser gerado
-    scanf("%s",&arquivo);
-
-    strcat(comando,"./generateRandomMatrixDouble ");
-    strcat(comando,linhas);
-    strcat(comando,colunas);
-    strcat(comando,valor);
-    strcat(comando," ");
-    strcat(comando,arquivo);
-    strcat(comando,".txt");
-
-    printf("%s",comando);
-
 return 0;
 }
-
 
 /*
 pthread_t meutid;        // Variável que armazena o id do thread principal
