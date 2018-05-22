@@ -1,109 +1,110 @@
 #include <stdio.h>
-#include <stdlib.h>
 #include <string.h>
+#include <pthread.h>
 
-int validaCaracteres(char c);
+#include "principais.c"
+#include "auxiliares.c"
 
 int main(){
 
-    char linhas[6];
-    char colunas[6];
+    header();
+
+    char linhas[5];
+    char colunas[5];
     char arquivo[30];
-    float valor;
-    int threads;
+    float valorBusca;
+    int nThreads;
 
-    char comando[100] = "";
+    int m;
+    int potencia;
+    int inteiro = 0;
     char validador;
-    int valido;
-    int i;
-
-    printf("ESTE PROGRAMA DEVE BUSCAR UM\n");
-    printf("VALOR NUMA MATRIZ ALEATORIA\n");
-    printf("UTILIZANDO MULTIPLAS THREADS\n");
-    printf("============================\n");
+    int i, valido;
 
     printf("\n1. Para gerar a matriz, entre com...\n");
 
-    do{
-        i = 0;
-        valido = 1;
-
-        printf("\nNumero de linhas (M): ");
-        fgets(linhas,6,stdin);
-
-        validador = linhas[i];
         do{
-            if(!validaCaracteres(validador))
-                valido = 0;
-            i++;
+            i = 0;
+            valido = 1;
+
+            printf("\n\tNumero de linhas (M): ");
+            fgets(linhas,5,stdin);	
+	    potencia = strlen(linhas)-1;
+
             validador = linhas[i];
-        }while(validador!='\n');
+            do{
+                if(!retornaInt(validador,&inteiro,potencia--))
+                    valido = 0;
+                i++;
+                validador = linhas[i];
+            }while(validador!='\n');
 
-        if(!valido){
-            printf("Caractere invalido!\n");
-            printf("Digite novamente...\n");
-        }else
-            linhas[i] = ' ';
-    }while(!valido);
+            if(!valido){
+                printf("\tCaractere invalido!\n");
+                printf("\tDigite novamente...\n");
+            }else{
+                linhas[i] = ' ';
+	        m = inteiro;
+	    }
+        }while(!valido);
 
-    do{
-        i = 0;
-        valido = 1;
-
-        printf("\nNumero de colunas (N): ");
-        fgets(colunas,6,stdin);
-
-        validador = colunas[i];
+        int n;
+        inteiro = 0;
         do{
-            if(!validaCaracteres(validador))
-                valido = 0;
-            i++;
+            i = 0;
+            valido = 1;
+
+            printf("\n\tNumero de colunas (N): ");
+            fgets(colunas,5,stdin);
+	    potencia = strlen(colunas)-1;
+
             validador = colunas[i];
-        }while(validador!='\n');
+            do{
+                if(!retornaInt(validador,&inteiro,potencia--))
+                    valido = 0;
+                i++;
+                validador = colunas[i];
+            }while(validador!='\n');
 
-        if(!valido){
-            printf("Caractere invalido!\n");
-            printf("Digite novamente...\n");
-        } else
-            colunas[i] = ' ';
-    }while(!valido);
+            if(!valido){
+                printf("\tCaractere invalido!\n");
+                printf("\tDigite novamente...\n");
+            }else{
+                colunas[i] = ' ';
+	        n = inteiro;
+	    }
+        }while(!valido);
 
-    printf("\nNome do arquivo: ");
-    scanf("%s",&arquivo);
+        printf("\n\tNome do arquivo: ");
+	fgets(arquivo,30,stdin);
 
-    printf("\n------------------------------------------------------------\n");
-    strcat(comando,"../plugins/generateRandomMatrixDouble ");
-    strcat(comando,linhas);
-    strcat(comando,colunas);
-    strcat(comando,"../arquivos/");
-    strcat(comando,arquivo);
-    strcat(comando,".txt");
-    system(comando);
-    printf("------------------------------------------------------------\n");
+        printf("\n--------------------------------------------------------\n");
+        geraMatriz(linhas,colunas,arquivo);
+        printf("--------------------------------------------------------\n");
 
-    getchar();
-    printf("\n2. Para buscar um valor na matriz, entre com...\n");    
+    printf("\n2. Para buscar um valor na matriz, entre com...\n");
 
-    printf("\nNumero de threads (T): ");
-    scanf("%d",&threads);
+	printf("\n\tNumero de threads (T): ");
+	scanf("%d",&nThreads);
 
-    printf("\nValor a ser buscado (V): ");
-    scanf("%f",&valor);
+	while(nThreads<=0 || nThreads>16){
+            printf("\tNumero invalido!\n");
+            printf("\tDigite novamente...\n");
 
-    printf("\n------------------------------------------------------------\n");
-    printf("Buscando valores na matriz");
-    printf("\n------------------------------------------------------------\n");
+	    printf("\n\tNumero de threads (T): ");
+	    scanf("%d",&nThreads);
+	}
+
+	printf("\n\tValor a ser buscado (V): ");
+	scanf("%f",&valorBusca);
+
+	int nLeituras = m*n/nThreads;
+
+	printf("\n--------------------------------------------------------\n");
+        printf("Buscando valores na matriz\n");
+	printf("--------------------------------------------------------\n");
+
+	buscaValores(nThreads,valorBusca,nLeituras,arquivo);
 
     return 0;
 }
-
-int validaCaracteres(char c){
-    if((int)c>=48 && (int)c<=57)
-        return 1;
-    else
-        return 0;
-}
-
-
-
-
