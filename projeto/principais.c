@@ -85,16 +85,16 @@ void *threadBuscaValores(void *vArgumentos){
     FILE *arquivo = fopen(caminho,"r");
 
     // Achando linha
-    if(threadArgumentos->inicio % threadArgumentos->nColunas)
+    if(threadArgumentos->inicio%threadArgumentos->nColunas>0)
         linha = threadArgumentos->inicio/threadArgumentos->nColunas;
     else
-        linha = (threadArgumentos->inicio/threadArgumentos->nColunas)-1;
+        linha = threadArgumentos->inicio/threadArgumentos->nColunas - 1;
 
     // Achando coluna
-    if(threadArgumentos->inicio%threadArgumentos->nLinhas == 0)
-        coluna = threadArgumentos->nLinhas - 1;
+    if(threadArgumentos->inicio%threadArgumentos->nColunas == 0)
+        coluna = threadArgumentos->inicio%threadArgumentos->nColunas - 1;
     else
-        coluna = (threadArgumentos->inicio%threadArgumentos->nLinhas)-1;
+        coluna = threadArgumentos->inicio%threadArgumentos->nColunas;
 
     for(i=1;i<threadArgumentos->inicio;i++){
         fscanf(arquivo,"%f",&procura);
