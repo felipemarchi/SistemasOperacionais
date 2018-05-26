@@ -102,9 +102,11 @@ int main(){
 
 	printf("\n--------------------------------------------------------\n");
         printf("Buscando valores na matriz\n");
-	printf("--------------------------------------------------------\n");
+	printf("--------------------------------------------------------\n\n");
 
-	buscaValores(nThreads,valorBusca,nLeituras,arquivo);
+	buscaValores(nThreads,valorBusca,nLeituras,arquivo,m,n);
+
+        mostraResultados(inicio);        
 
     return 0;
 }
