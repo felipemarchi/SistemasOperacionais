@@ -16,7 +16,7 @@ struct Argumentos{
 
 typedef struct Lista_Resultados{
     int posicao[2];
-    struct Lista *prox;
+    struct Lista_Resultados *prox;
 }lista;
 lista *inicio;
 
