@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 #include <pthread.h>
 
@@ -7,17 +8,17 @@
 struct Argumentos{
     int inicio;
     int nLeituras;
-    float procura;
-    int linha;
-    int coluna;
+    int nLinhas;
+    int nColunas;
     char arquivo[30];
     float valorBusca;
 };
 
-struct Lista_Resultados{
+typedef struct Lista_Resultados{
     int posicao[2];
     struct Lista *prox;
 }lista;
+lista *inicio;
 
 pthread_t threadID[16];
 struct Argumentos vArgumentos[16];
@@ -45,10 +46,18 @@ int Inserir_fim_LS (lista **inicio, int linha, int coluna)
 	return 0;
 }
 
-void buscaValores(int nThreads,float valorBusca,int nLeituras,char arquivo[30]){
+int inicializar(lista **inicio){
+    *inicio = NULL;
+    return 0;
+}
+
+void buscaValores(int nThreads,float valorBusca,int nLeituras,char arquivo[30],int m,int n){
     register int i;
+    inicializar(&inicio);
 
     for(i=0; i<nThreads; i++){
+	vArgumentos[i].nLinhas = m;
+	vArgumentos[i].nColunas = n;
 	vArgumentos[i].inicio = nLeituras*i;
 	vArgumentos[i].nLeituras = nLeituras;
 	vArgumentos[i].valorBusca = valorBusca;
@@ -64,46 +73,67 @@ void buscaValores(int nThreads,float valorBusca,int nLeituras,char arquivo[30]){
 
 void *threadBuscaValores(void *vArgumentos){
     struct Argumentos *threadArgumentos = vArgumentos;
+    int linha, coluna;
+    float procura;
+    int i;
 
-    printf("\nThread funcionando...");
-    printf("\nEsta deve ler %d valores da matriz do arquivo ""%s.txt"" em busca do elemento %f partindo do elemento %d\n", threadArgumentos->nLeituras,threadArgumentos->arquivo,threadArgumentos->valorBusca,threadArgumentos->inicio);
+    char caminho[100] = "";
+    strcat(caminho,"../arquivos/matrizes/");
+    strcat(caminho,threadArgumentos->arquivo);
+    strcat(caminho,".txt");
 
+    FILE *arquivo = fopen(caminho,"r");
 
     // Achando linha
-    if(threadArgumentos->inicio % nColunas)
-        threadArgumentos->linha = threadArgumentos->inicio/nColunas;
+    if(threadArgumentos->inicio % threadArgumentos->nColunas)
+        linha = threadArgumentos->inicio/threadArgumentos->nColunas;
     else
-        threadArgumentos->linha = (elemento/nColunas)-1;
+        linha = (threadArgumentos->inicio/threadArgumentos->nColunas)-1;
 
     // Achando coluna
-    if(threadArgumentos->inicio%nLinhas == 0)
-        threadArgumentos->coluna = nLinhas - 1;
+    if(threadArgumentos->inicio%threadArgumentos->nLinhas == 0)
+        coluna = threadArgumentos->nLinhas - 1;
     else
-        threadArgumentos->coluna = (elemento%nLinhas)-1;
+        coluna = (threadArgumentos->inicio%threadArgumentos->nLinhas)-1;
 
     for(i=1;i<threadArgumentos->inicio;i++){
-        fscanf("%f",&procura);
+        fscanf(arquivo,"%f",&procura);
     }
 
     for(i=0;i<threadArgumentos->nLeituras;i++){
-        fscanf("%f",&procura);
+        fscanf(arquivo,"%f",&procura);
         if(procura == threadArgumentos->valorBusca){//Se encontrar o valorBusca
-            Inserir_fim_LS (&inicio, threadArgumentos->linha, threadArgumentos->coluna)
+            Inserir_fim_LS (&inicio, linha, coluna);
         }
 
-        if(threadArgumentos->coluna == nColunas){//Ir para a próxima posição
-            threadArgumentos->coluna = 0;
-            threadArgumentos->linha++;
-        }
+        if(coluna == threadArgumentos->nColunas){//Ir para a próxima posição
+            coluna = 0;
+            linha++;
+        }else{
+	    coluna++;
+	}
     }
 
-    //brenda, utilize as variaveis desses prints como exemplo
-    //pode apaga-los assim que entender, bem como estes comentarios
-    //seu objetivo a partir daqui eh abrir o arquivo e percorrer a matriz
-    //em busca do valorBusca
-    //se encontrar, utilize a variavel global lista para guardar sua posicao
-
     pthread_exit(NULL);
+}
+
+int mostraResultados (lista *inicio)
+{
+    lista  *percorre;
+
+    if (inicio==NULL)
+	    printf("Nenhum valor encontrado\n");
+
+	else {
+	    percorre = inicio;
+            printf("POSICAO ENCONTRADA: %d,%d\n",percorre->posicao[0], percorre->posicao[1]);
+	     while (percorre->prox != NULL)
+	     {
+                 printf("POSICAO ENCONTRADA: %d,%d\n",percorre->posicao[0], percorre->posicao[1]);
+	         percorre = percorre ->prox;
+	     }
+	}
+	return 0;
 }
 
 
