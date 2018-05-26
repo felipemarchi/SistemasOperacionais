@@ -81,6 +81,7 @@ void *threadBuscaValores(void *vArgumentos){
     strcat(caminho,"../arquivos/matrizes/");
     strcat(caminho,threadArgumentos->arquivo);
     strcat(caminho,".txt");
+<<<<<<< HEAD
 
     FILE *arquivo = fopen(caminho,"r");
 
@@ -90,6 +91,17 @@ void *threadBuscaValores(void *vArgumentos){
     else
         linha = threadArgumentos->inicio/threadArgumentos->nColunas - 1;
 
+=======
+
+    FILE *arquivo = fopen(caminho,"r");
+
+    // Achando linha
+    if(threadArgumentos->inicio%threadArgumentos->nColunas>0)
+        linha = threadArgumentos->inicio/threadArgumentos->nColunas;
+    else
+        linha = threadArgumentos->inicio/threadArgumentos->nColunas - 1;
+
+>>>>>>> fb0c791de800acf3ad314e0e4886e31115fb9cea
     // Achando coluna
     if(threadArgumentos->inicio%threadArgumentos->nColunas == 0)
         coluna = threadArgumentos->inicio%threadArgumentos->nColunas - 1;
@@ -136,6 +148,7 @@ int mostraResultados (lista *inicio)
 	return 0;
 }
 
+<<<<<<< HEAD
 int Obter_Tamanho_LS(lista *inicio, int *tam)
 {
     lista *percorre;
@@ -193,5 +206,7 @@ void ordenar_coluna(lista **inicio)
         anterior = anterior->prox;
     }
 }
+=======
+>>>>>>> fb0c791de800acf3ad314e0e4886e31115fb9cea
 
 
