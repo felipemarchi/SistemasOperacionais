@@ -90,14 +90,6 @@ void *threadBuscaValores(void *vArgumentos){
     else
         linha = threadArgumentos->inicio/threadArgumentos->nColunas - 1;
 
-    FILE *arquivo = fopen(caminho,"r");
-
-    // Achando linha
-    if(threadArgumentos->inicio%threadArgumentos->nColunas>0)
-        linha = threadArgumentos->inicio/threadArgumentos->nColunas;
-    else
-        linha = threadArgumentos->inicio/threadArgumentos->nColunas - 1;
-
     // Achando coluna
     if(threadArgumentos->inicio%threadArgumentos->nColunas == 0)
         coluna = threadArgumentos->inicio%threadArgumentos->nColunas - 1;
@@ -119,7 +111,7 @@ void *threadBuscaValores(void *vArgumentos){
             linha++;
         }else{
 	    coluna++;
-	}
+        }
     }
 
     pthread_exit(NULL);
@@ -166,6 +158,7 @@ int Obter_Tamanho_LS(lista *inicio, int *tam)
 void ordenar_linha(lista **inicio)
 {
     int tam;
+    int temp[2];
     Obter_Tamanho_LS(*inicio,&tam);
 
     lista *anterior, *atual = (*inicio)->prox;
@@ -174,7 +167,12 @@ void ordenar_linha(lista **inicio)
         anterior = *inicio;
         for(int j=0; j<tam; j++) {
             if(anterior->posicao[0] > atual->posicao[0]) {
-                //troca(anterior, atual);
+                temp[0] = atual->posicao[0];
+                temp[1] = atual->posicao[1];
+                atual->posicao[0] = anterior->posicao[0];
+                atual->posicao[1] = anterior->posicao[1];
+                anterior->posicao[0] = temp[0];
+                anterior->posicao[1] = temp[1];
             }
             atual = anterior->prox;
         }
@@ -193,7 +191,12 @@ void ordenar_coluna(lista **inicio)
         anterior = *inicio;
         for(int j=0; j<tam; j++) {
             if(anterior->posicao[1] > atual->posicao[1]) {
-                //troca(anterior, atual);
+                temp[0] = atual->posicao[0];
+                temp[1] = atual->posicao[1];
+                atual->posicao[0] = anterior->posicao[0];
+                atual->posicao[1] = anterior->posicao[1];
+                anterior->posicao[0] = temp[0];
+                anterior->posicao[1] = temp[1];
             }
             atual = anterior->prox;
         }
