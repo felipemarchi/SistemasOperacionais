@@ -8,6 +8,6 @@ Após realizado um cálculo para a escolha do projeto, este foi definido para o 
 
 ### Detalhamento dos produtos finais
 O objetivo é, no final do projeto, ter produzido os seguintes itens:
-1. O código fonte do programa completo, documentado e pronto para ser compilado em sistemas Linux.
-2. Um vídeo mostrando o código fonte do programa, a compilação do programa, um trecho do arquivo de entrada e a execução do programa para 2, 4, 8 e 16 threads.
-3. Um relatório contendo a descrição da solução do problema (algoritmo em alto nível); as instruções para compilá-lo; os gráficos com os tempos de execução do programa para 2, 4, 8 e 16 threads; as conclusões a respeito dos resultados obtidos; e o endereço do repositório Git.
+1. O [código fonte](/projeto/main.c) do programa completo, documentado e pronto para ser compilado em sistemas Linux.
+2. Um [vídeo](/arquivos/video.mp4) mostrando o código fonte do programa, a compilação do programa, um trecho do arquivo de entrada e a execução do programa para 2, 4, 8 e 16 threads.
+3. Um [relatório](/arquivos/relatorio.pdf) contendo a descrição da solução do problema (algoritmo em alto nível); as instruções para compilá-lo; os gráficos com os tempos de execução do programa para 2, 4, 8 e 16 threads; as conclusões a respeito dos resultados obtidos; e o endereço do repositório Git.
