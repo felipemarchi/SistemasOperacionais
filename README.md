@@ -1,4 +1,6 @@
-﻿# Informações gerais
+![Programa em execução](https://github.com/felipemarchi/multithreading-in-c/blob/master/arquivos/snapshot.png "Programa em execução")
+
+# Informações gerais
 Este é um repositório clonado e editado para a apresentação de um projeto para a disciplina Sistemas Operacionais, oferecida na [Faculdade de Tecnologia](http://www.ft.unicamp.br) da [UNICAMP](http://www.unicamp.br). O [repositório original](https://github.com/gradvohl/SistemasOperacionais.git) apresentava informações gerais sobre os projetos a serem desenvolvidos na disciplina, instruções sobre os procedimentos obrigatórios, e alguns códigos fonte básicos para os estudantes utilizarem em seus projetos.
 
 ## O projeto
